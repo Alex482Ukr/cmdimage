@@ -1,6 +1,7 @@
 from PIL import Image
 from PIL import ImageEnhance
 from math import ceil
+from os import get_terminal_size
 
 class Screen:
     symbols = r''' `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@'''
@@ -38,8 +39,10 @@ class Screen:
                     self.matrix[i][j] = self.symbols[self.scale(bitmap[j, i], 255, len(self.symbols))]
     
 
-scr = Screen(*map(lambda n: int(n)-1, input("Console resolution: ").split()))
+if __name__ == '__main__':
+    size = get_terminal_size()
+    scr = Screen(size.columns-1, size.lines-1)
 
-while True:
-    scr.import_image(input("Path to image: ").strip('"'))
-    scr.show()
+    while True:
+        scr.import_image(input("Path to image: ").strip('"'))
+        scr.show()
