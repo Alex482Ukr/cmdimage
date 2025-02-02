@@ -18,15 +18,17 @@ class Screen:
 
     @classmethod
     def scale(cls, num, sc1, sc2):
-        return ceil(num / sc1 * (sc2-1 if sc2 != 0 else sc2))
+        a = ceil(num / sc1 * sc2)
+        return a if a == 0 else a-1
 
     def show(self):
-        for i in range(self.rows):
-            print(*self.matrix[i], sep='', end='\n')
+        print(self)
     
     def gradient(self):
         self.matrix = [[self.symbols[self.scale(i, self.cols, len(self.symbols))] for i in range(self.cols)] for _ in range(self.rows)]
 
+    def __str__(self):
+        return '\n'.join(''.join(row) for row in self.matrix) 
 
     def import_image(self, path):
         with Image.open(path) as im:
@@ -40,9 +42,9 @@ class Screen:
     
 
 if __name__ == '__main__':
-    size = get_terminal_size()
-    scr = Screen(size.columns-1, size.lines-1)
-
     while True:
-        scr.import_image(input("Path to image: ").strip('"'))
-        scr.show()
+        path = input("Path to image: ").strip('" ')
+        size = get_terminal_size()
+        scr = Screen(size.columns-1, size.lines-1)
+        scr.import_image()
+        print(scr)
