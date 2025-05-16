@@ -46,5 +46,5 @@ if __name__ == '__main__':
         path = input("Path to image: ").strip('" ')
         size = get_terminal_size()
         scr = Screen(size.columns-1, size.lines-1)
-        scr.import_image()
+        scr.import_image(path)
         print(scr)
